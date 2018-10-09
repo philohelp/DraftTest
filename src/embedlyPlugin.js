@@ -1,6 +1,14 @@
 import React, { Component } from 'react';
-import EmbedlyCard from "./embedlyCard";
+
+import decorateComponentWithProps from 'decorate-component-with-props';
+
+import AddEmbedly from './embed/modifiers/embedlyAdd';
+import DefaultEmbedComponent from "./embed/components/embedlyCard";
 import * as types from './embed/constants';
+
+import * as types from './embed/constants';
+
+import embedStyles from './embed/embedStyles.module.css';
 
 const embedlyPlugin = (config) => {
   return {
