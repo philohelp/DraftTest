@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import styles from './../videoStyles.module.css';
+import styles from './embedBtnStyles.module.css';
+import { convertToRaw } from 'draft-js';
 
 export default class VideoAdd extends Component {
   // Start the popover closed
@@ -45,6 +46,9 @@ export default class VideoAdd extends Component {
   addResource = () => {
     const { editorState, onChange } = this.props;
     onChange(this.props.modifier(editorState, { src: this.state.url }));
+    const currentContent = this.props.modifier(editorState, { src: this.state.url }).getCurrentContent();
+    const es = convertToRaw(currentContent);
+    console.log("from button", es)
   };
 
   changeUrl = (evt) => {
@@ -53,14 +57,14 @@ export default class VideoAdd extends Component {
 
   render() {
     const popoverClassName = this.state.open ?
-      styles.addVideoPopover :
-      styles.addVideoClosedPopover;
+      styles.addEmbedPopover :
+      styles.addEmbedClosedPopover;
     const buttonClassName = this.state.open ?
-      styles.addVideoPressedButton :
-      styles.addVideoButton;
+      styles.addEmbedPressedButton :
+      styles.addEmbedButton;
 
     return (
-      <div className={styles.addVideo} >
+      <div className={styles.addEmbed} >
         <button
           className={buttonClassName}
           onMouseUp={this.openPopover}
@@ -75,16 +79,16 @@ export default class VideoAdd extends Component {
           <input
             type="text"
             placeholder="Collez l'adresse de la page…"
-            className={styles.addVideoInput}
+            className={styles.addEmbedInput}
             onChange={this.changeUrl}
             value={this.state.url}
           />
           <button
-            className={styles.addVideoConfirmButton}
+            className={styles.addEmbedConfirmButton}
             type="button"
             onClick={this.addResource}
           >
-            Add
+            Insérer
           </button>
         </div>
       </div>

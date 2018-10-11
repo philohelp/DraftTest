@@ -24,10 +24,7 @@ var moment = require('moment');
 moment.locale('fr');
 var embedly = require('embedly')
 
-const url = "https://www.aufeminin.com/beaute-de-stars/angelina-jolie-a-coupe-ses-longs-cheveux-photos-s2405824.html";
-
 export default class EmbedMe extends Component {
-    
     state = {
         data: {},
         name: '',
@@ -36,6 +33,7 @@ export default class EmbedMe extends Component {
     }
 
     componentWillMount = () => {
+        console.log(this.props, "mounting comp")
         this.extractApi()
     }
 
@@ -44,7 +42,7 @@ export default class EmbedMe extends Component {
         const EMBEDLY_KEY = "fd66b66abd8c4bea86a9373499d464d6";
         let api = new embedly({key: EMBEDLY_KEY, secure: true});
         const setState = this.setState.bind(this)
-        api.extract({url: url}, function(err, objs) {
+        api.extract({url: this.props.blockProps.src}, function(err, objs) {
           if (!!err) {
             console.error(err.stack, objs);
             return;
@@ -65,7 +63,7 @@ export default class EmbedMe extends Component {
         const {data, name, image, published} = this.state;
         return(
             <a href={data.original_url} target={"_blank"}>
-                <Card style={{margin:100, maxWidth:700}} >
+                <Card style={{margin:20, width:"80%"}} >
                     <CardContent>
                         <Media>
                             <MediaLeft>
