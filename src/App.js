@@ -23,6 +23,14 @@ const initialState = {
         "src": "https://www.youtube.com/watch?v=KLDZt948AHk&index=2&t=2s&list=PL02WGlXJ28I5EIPb3Oywn71tk69CKfiJ5",
         'type': 'draft-js-embedly-plugin'
       }
+    },
+    "1": {
+      "type": "draft-js-embedly-plugin",
+      "mutability": "IMMUTABLE",
+      "data": {
+        "src": "https://www.20minutes.fr/sport/2353723-20181012-thierry-henry-va-engager-trois-ans-monaco",
+        'type': 'draft-js-embedly-plugin'
+      }
     }
   },
   "blocks": [
@@ -36,6 +44,19 @@ const initialState = {
       "offset": 0,
       "length": 1,
       "key": 0
+    }],
+    "data": {}
+  },
+  {
+    "key": "dfskmk3s",
+    "text": " ",
+    "type": "atomic",
+    "depth": 0,
+    "inlineStyleRanges": [],
+    "entityRanges": [{
+      "offset": 0,
+      "length": 1,
+      "key": 1
     }],
     "data": {}
   },

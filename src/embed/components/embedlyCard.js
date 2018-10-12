@@ -62,32 +62,31 @@ export default class EmbedMe extends Component {
     render(){
         const {data, name, image, published} = this.state;
         return(
-            <a href={data.original_url} target={"_blank"}>
-                <Card style={{margin:20, width:"80%"}} >
-                    <CardContent>
-                        <Media>
-                            <MediaLeft>
-                                <Image isSize='96x96' src={image} />
-                            </MediaLeft>
-                            <MediaContent>
-                                <Title isSize={5}>{data.title}</Title>
-                                {
-                                    name ?
-                                    <Subtitle isSize={6} style={{color:"grey"}}>{name} - {data.provider_url}</Subtitle>
-                                    :
-                                    <Subtitle isSize={6}>{data.provider_url}</Subtitle>
-                                }
-                                
-                            </MediaContent>
-                        </Media>
-                        <Content style={{marginTop:-20}}>
-                            {_.truncate(data.description, { 'length': 170,'separator': /,? +/ } )}
-                            <br/>
-                            <small>{published}</small>
-                        </Content>
-                    </CardContent>
-                </Card>
-            </a>
+            <div style={{display:"flex", flexDirection:"row", justifyContent:"center"}}>
+                <a href={data.original_url} target={"_blank"} style={{width:"50%"}}>
+                    <Card style={{lineHeight:"1.4rem"}}>
+                        <CardContent>
+                            <Media>
+                                <MediaLeft>
+                                    <Image src={image} style={{maxWidth:180}}/>
+                                    <small style={{fontWeight:"100", color:"grey"}}>{published}</small>
+                                </MediaLeft>
+                                <MediaContent>
+                                <Title isSize={5}  style={{marginBottom:10}}>
+                                {data.title}
+                                </Title>
+                                <small>
+                                {_.truncate(data.description, { 'length': 170,'separator': /,? +/ } )}
+                                </small>
+                                <Subtitle isSize={6} style={{color:"grey", fontWeight:"700", marginTop:10, textAlign:"right"}}>
+                                {data.provider_url}
+                                </Subtitle>
+                                </MediaContent>
+                            </Media>
+                        </CardContent>
+                    </Card>
+                </a>
+            </div>
         )
     }
 }

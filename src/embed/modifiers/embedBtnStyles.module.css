@@ -23,14 +23,13 @@
     box-sizing: border-box;
     background:red;
     border: 1px solid #ddd;
-    padding: -3;
     color:white;
-    border-radius: 2em;
+    border-radius: 0.5em;
     cursor: pointer;
     height: 2em;
-    width: 2em;
-    font-size: 2em;
-    line-height: 1.2em;
+    width: 8em;
+    font-size: 0.9em;
+    line-height: 1em;
     margin: 0;
 }
 
