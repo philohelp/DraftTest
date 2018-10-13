@@ -18,13 +18,81 @@ import {
     Content
 } from "bloomer";
 
+import './../embedStyles.module.css';
+
+import Embedly from 'react-embedly';
+
 import _ from "lodash";
+
+const testimg = "https://resize-parismatch.ladmedia.fr/r/625,417,center-middle,ffffff/img/var/news/storage/images/paris-match/people/angelina-jolie-et-brad-pitt-la-treve-apres-deux-ans-de-conflit-1575880/25567685-1-fre-FR/Angelina-Jolie-et-Brad-Pitt-la-treve-apres-deux-ans-de-conflit.jpg"
+
+const testvid = "https://www.youtube.com/watch?v=TbppXMGrsvw"
+
+const testpage = "http://www.slate.fr/story/168491/twitter-propage-freine-theories-du-complot"
 
 var moment = require('moment');
 moment.locale('fr');
 var embedly = require('embedly')
 
-export default class EmbedMe extends Component {
+class EmbedMe extends React.Component {
+
+    constructor(props) {
+      super(props);
+  
+      this.state = {
+        showIframe: false,
+      };
+  
+      this.enablePreview = this.enablePreview.bind(this);
+    }
+  
+    componentDidMount() {
+      this.renderEmbedly();
+    }
+  
+    componentDidUpdate(prevProps, prevState) {
+      if (prevState.showIframe !== this.state.showIframe && this.state.showIframe === true) {
+        this.renderEmbedly();
+      }
+    }
+  
+    getScript() {
+      const script = document.createElement('script');
+      script.async = 1;
+      script.src = '//cdn.embedly.com/widgets/platform.js';
+      script.onload = () => {
+        window.embedly();
+      };
+      document.body.appendChild(script);
+    }
+  
+    renderEmbedly() {
+      if (window.embedly) {
+        window.embedly();
+      } else {
+        this.getScript();
+      }
+    }
+  
+    enablePreview() {
+      this.setState({
+        showIframe: true,
+      });
+    }
+  
+    render() {
+      const url = this.props.blockProps.src;
+      const innerHTML = `<div><a class="embedly-card" href="${url}" data-card-controls="0" data-card-theme="light">Embedded ― ${url}</a></div>`;
+      return (
+        <div className="md-block-atomic-embed">
+          <div dangerouslySetInnerHTML={{ __html: innerHTML }}/>
+        </div>
+      );
+    }
+  }
+
+
+class EmbedMeANC2 extends Component {
     state = {
         data: {},
         name: '',
@@ -33,7 +101,6 @@ export default class EmbedMe extends Component {
     }
 
     componentWillMount = () => {
-        console.log(this.props, "mounting comp")
         this.extractApi()
     }
 
@@ -42,7 +109,11 @@ export default class EmbedMe extends Component {
         const EMBEDLY_KEY = "fd66b66abd8c4bea86a9373499d464d6";
         let api = new embedly({key: EMBEDLY_KEY, secure: true});
         const setState = this.setState.bind(this)
-        api.extract({url: this.props.blockProps.src}, function(err, objs) {
+        console.log(this.props, "mounting comp")
+        const imageReg = /[\/.](gif|jpg|jpeg|tiff|png)$/i;
+        const urlfromprops = this.props.blockProps.src
+        console.log(imageReg.test(urlfromprops))
+        api.extract({url:urlfromprops}, function(err, objs) {
           if (!!err) {
             console.error(err.stack, objs);
             return;
@@ -62,7 +133,7 @@ export default class EmbedMe extends Component {
     render(){
         const {data, name, image, published} = this.state;
         return(
-            <div style={{display:"flex", flexDirection:"row", justifyContent:"center"}}>
+            <div style={{display:"flex", flexDirection:"row", justifyContent:"center", marginTop:10, marginBottom:10}}>
                 <a href={data.original_url} target={"_blank"} style={{width:"50%"}}>
                     <Card style={{lineHeight:"1.4rem"}}>
                         <CardContent>
@@ -91,31 +162,11 @@ export default class EmbedMe extends Component {
     }
 }
 
-/*
-const ArticleCard = props => <Card style={{flex: 0}}>
-            <CardItem>
-              <Left>
-                <Thumbnail source={{uri:props.item.favicons[2] ? props.item.favicons[2] : props.item.favicons[0] }} />
-                <Body>
-                  <Text>{_.truncate(props.item.title, {length:80})}</Text>
-                </Body>
-              </Left>
-            </CardItem>
-            <CardItem>
-              <Body>
-                <Image source={{uri: props.item.images[0]}} style={{height: 200, width: 200, flex: 1}}/>
-                <Text>
-                {_.truncate(props.item.description, {length:100})}
-                </Text>
-              </Body>
-            </CardItem>
-            <CardItem>
-              <Left>
-                <Button transparent textStyle={{color: '#87838B'}}>
-                  <Icon name="md-open" />
-                  <Text>{props.item.url}</Text>
-                </Button>
-              </Left>
-            </CardItem>
-          </Card>
-*/
+const EmbedMeANCFFF = (props) => <div style={{display:"flex", flexDirection:"row", justifyContent:"center", margin:20}}>
+    <Embedly
+        url={props.blockProps.src}
+        apiKey="fd66b66abd8c4bea86a9373499d464d6"
+    /> 
+</div>
+
+export default EmbedMe

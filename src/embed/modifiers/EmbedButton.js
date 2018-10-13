@@ -70,7 +70,7 @@ export default class VideoAdd extends Component {
           onMouseUp={this.openPopover}
           type="button"
         >
-          Insérer un lien
+          Insérer un lien (vidéo, page web...)
         </button>
         <div
           className={popoverClassName}
